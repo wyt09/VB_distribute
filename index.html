@@ -508,6 +508,7 @@
             });
 
             // Display results
+            /*
             let resultHTML = '<h3>抽籤結果：</h3><div class="groups-container">';
             for (const [groupName, members] of Object.entries(groups)) {
                 resultHTML += `
@@ -517,7 +518,22 @@
                     </div>`;
             }
             resultHTML += '</div>';
+            document.getElementById('result').innerHTML = resultHTML;*/
+            let resultHTML = '<h3>抽籤結果：</h3><div class="groups-container">';
+            for (const [groupName, members] of Object.entries(groups)) {
+            const memberList = members.map(({ name, gender }) => {
+            const genderLabel = gender === 'male' ? '男' : gender === 'female' ? '女' : '';
+            return `${name} (${genderLabel})`;}).join('<br>');
+
+            resultHTML += `
+                <div class="group">
+                    <h4>第${groupName}組</h4>
+                    <p>${memberList}</p>
+                </div>`;}
+r
+            resultHTML += '</div>';
             document.getElementById('result').innerHTML = resultHTML;
+
         }
 
         window.onload = updatePersonSelect;
