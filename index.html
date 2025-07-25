@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>華一江排球團抽籤分組程式</title>
     <style>
-    .male {color: steelblue;}
-    .female {color: hotpink;}
+        .male {color: steelblue;}
+        .female {color: hotpink;}
+
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -267,7 +268,7 @@
                     <input type="text" class="male" value="節哥" oninput="updatePersonSelect()">
                 </div>
                 <div class="input-with-buttons">
-                    <input type="text" class="female" value="熊" oninput="updatePersonSelect()">
+                    <input type="text" class="fale" value="熊" oninput="updatePersonSelect()">
                 </div>
             </div>
         </div>
@@ -398,7 +399,7 @@
             // Get all names from inputs
             let females = Array.from(document.querySelectorAll('.female')).map(i => i.value.trim()).filter(n => n);
             let males = Array.from(document.querySelectorAll('.male')).map(i => i.value.trim()).filter(n => n);
-
+            
             const groups = { A: [], B: [], C: [], D: [], E: [], F: [] };
             const assigned = new Set();
             const groupOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
@@ -450,8 +451,7 @@
                     const targetGroup = groupOrder[groupIndex];
                     // Add to group if not already maxed out (3 people)
                     if (groups[targetGroup].length < 3) {
-                        //groups[targetGroup].push(male);
-                        groups[group].push({name:male, gender:'male'});
+                        groups[targetGroup].push(male);
                         assigned.add(male);
                         found = true;
                     }
@@ -519,6 +519,7 @@
             resultHTML += '</div>';
             document.getElementById('result').innerHTML = resultHTML;
         }
+
         window.onload = updatePersonSelect;
     </script>
 </body>
