@@ -506,16 +506,21 @@
             });
 
             // Display results
-            let resultHTML = '<h3>抽籤結果：</h3><div class="groups-container">';
-            for (const [groupName, members] of Object.entries(groups)) {
-                resultHTML += `
-                    <div class="group">
-                        <h4>第${groupName}組</h4>
-                        <p>${members.join('<br>')}</p>
-                    </div>`;
-            }
-            resultHTML += '</div>';
-            document.getElementById('result').innerHTML = resultHTML;
+let resultHTML = '<h3>抽籤結果：</h3><div class="groups-container">';
+for (const [groupName, members] of Object.entries(groups)) {
+    resultHTML += `
+        <div class="group">
+            <h4>第${groupName}組</h4>
+            <p>
+                ${members.map(member => 
+                    `<span class="${member.gender}">${member.name}</span>`
+                ).join('<br>')}
+            </p>
+        </div>`;
+}
+resultHTML += '</div>';
+document.getElementById('result').innerHTML = resultHTML;
+
         }
 
         window.onload = updatePersonSelect;
