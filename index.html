@@ -477,7 +477,7 @@
                     const targetGroup = groupOrder[groupIndex];
                     // Add to group if not already maxed out (3 people)
                     if (groups[targetGroup].length < 3) {
-                        groups[targetGroup].push(female);
+                        groups[targetGroup].push({ name: female, gender: 'female' });
                         assigned.add(female);
                         found = true;
                     }
@@ -504,18 +504,18 @@
                 }
             });
 
-            // Display results
-            let resultHTML = '<h3>抽籤結果：</h3><div class="groups-container">';
-            for (const [groupName, members] of Object.entries(groups)) {
-                resultHTML += `
-                    <div class="group">
-                        <h4>第${groupName}組</h4>
-                        <p>${members.join('<br>')}</p>
-                    </div>`;
-            }
-            resultHTML += '</div>';
-            document.getElementById('result').innerHTML = resultHTML;
-        }
+let resultHTML = '<h3>抽籤結果：</h3><div class="groups-container">';
+for (const [groupName, members] of Object.entries(groups)) {
+    resultHTML += `
+        <div class="group">
+            <h4>第${groupName}組</h4>
+            <p>
+                ${members.map(member => `<span class="${member.gender}">${member.name}</span>`).join('<br>')}
+            </p>
+        </div>`;
+}
+resultHTML += '</div>';
+document.getElementById('result').innerHTML = resultHTML;
 
         window.onload = updatePersonSelect;
     </script>
