@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>華一江排球團抽籤分組程式</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 800px;
+        }
+        .column {
+            display: flex;
+            flex-direction: column;
+            width: 48%;
+        }
+        .input-with-buttons {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            flex-grow: 1;
+        }
+        .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .button-group {
+            display: flex;
+            gap: 5px;
+        }
+        .add-button, .remove-button {
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4e79a7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
+        .add-button {
+            background-color: #4e79a7;
+        }
+        .add-button:hover {
+            background-color: #3a5f8a;
+        }
+        .remove-button {
+            background-color: #e15759;
+        }
+        .remove-button:hover {
+            background-color: #c13739;
+        }
+        button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #4e79a7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #3a5f8a;
+        }
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .groups-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1200px;
+        }
+        .group {
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 18%;
+            min-width: 150px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .group h4 {
+            margin-top: 0;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            font-size: 18px;
+        }
+        .card {
+            border: 2px dashed #888;
+            padding: 15px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 800px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+        }
+        .binding-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .binding-inputs select {
+            padding: 8px;
+            font-size: 16px;
+        }
+        .binding-inputs select[multiple] {
+            height: 150px;
+            min-width: 180px;
+            font-size: 16px;
+        }
+        .binding-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .binding-tag {
+            background-color: #4e79a7;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .binding-tag button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin: 0;
+            padding: 0 5px;
+            font-size: 16px;
+        }
+        h2, h3 {
+            font-size: 20px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .column {
+                width: 90%;
+            }
+            .group {
+                width: 80%;
+            }
+            .binding-inputs {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            input, select, button {
+                font-size: 18px;
+                padding: 12px;
+            }
+            .binding-tag {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>華一江排球團</h1>
+    <h1>抽籤分組程式</h1>
+    <div class="container">
+        <div class="column" id="female-column">
+            <div class="column-header">
+                <h2>女生</h2>
+                <div class="button-group">
+                    <button class="add-button" onclick="addPerson('female')" title="新增">+</button>
+                    <button class="remove-button" onclick="removePerson('female')" title="刪除">-</button>
+                </div>
+            </div>
+            <div id="female-container">
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="依芸" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="小育" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="阿禪" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="廖禎" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="小霏" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="柔涵" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="佩芹" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="婕妤" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="蛋餅" oninput="updatePersonSelect()">
+                </div>
+            </div>
+        </div>
+        <div class="column" id="male-column">
+            <div class="column-header">
+                <h2>男生</h2>
+                <div class="button-group">
+                    <button class="add-button" onclick="addPerson('male')" title="新增">+</button>
+                    <button class="remove-button" onclick="removePerson('male')" title="刪除">-</button>
+                </div>
+            </div>
+            <div id="male-container">
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="品客" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="J翰" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="大師" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="瑪莉" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="蚊子" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="子森" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="大腸" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="male" value="節哥" oninput="updatePersonSelect()">
+                </div>
+                <div class="input-with-buttons">
+                    <input type="text" class="female" value="熊" oninput="updatePersonSelect()">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 特殊分組設定 -->
+    <div id="special-binding" class="card">
+        <h3>🎯 特殊分組設定</h3>
+        <div class="binding-inputs">
+            <select id="person-select" multiple></select>
+            <select id="group-select">
+                <option value="A">A 組</option>
+                <option value="B">B 組</option>
+                <option value="C">C 組</option>
+                <option value="D">D 組</option>
+                <option value="E">E 組</option>
+                <option value="F">F 組</option>
+            </select>
+            <button onclick="addBinding()">➕ 新增綁定</button>
+        </div>
+        <div id="binding-tags" class="binding-tags"></div>
+    </div>
+
+    <button onclick="startLottery()">開始抽籤分組</button>
+    <div id="result"></div>
+
+    <script>
+        let lockedGroups = [];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function addPerson(gender) {
+            const container = document.getElementById(`${gender}-container`);
+            const count = container.childElementCount + 1;
+            const div = document.createElement('div');
+            div.className = 'input-with-buttons';
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = gender;
+            input.placeholder = `${gender === 'female' ? '女生' : '男生'}姓名${count}`;
+            input.oninput = updatePersonSelect;
+            
+            div.appendChild(input);
+            container.appendChild(div);
+            
+            updatePersonSelect();
+        }
+
+        function removePerson(gender) {
+            const container = document.getElementById(`${gender}-container`);
+            if (container.childElementCount > 1) {
+                container.removeChild(container.lastChild);
+                updatePersonSelect();
+            }
+        }
+
+        function updatePersonSelect() {
+            const inputs = [...document.querySelectorAll('.female'), ...document.querySelectorAll('.male')];
+            const select = document.getElementById('person-select');
+            select.innerHTML = '';
+            const uniqueNames = [...new Set(inputs.map(i => i.value.trim()).filter(n => n))];
+            for (const name of uniqueNames) {
+                const opt = document.createElement('option');
+                opt.value = name;
+                opt.textContent = name;
+                select.appendChild(opt);
+            }
+            
+            // 檢查現有綁定中是否有人已從名單移除
+            let bindingsChanged = false;
+            lockedGroups = lockedGroups.filter(binding => {
+                // 只保留仍在名單中的人員
+                const validMembers = binding.members.filter(name => uniqueNames.includes(name));
+                if (validMembers.length !== binding.members.length) {
+                    bindingsChanged = true;
+                    if (validMembers.length === 0) {
+                        return false; // 如果所有成員都不在名單上，移除整個綁定
+                    }
+                    binding.members = validMembers; // 更新綁定成員列表
+                }
+                return true;
+            });
+            
+            // 如果有任何變更，重新渲染綁定標籤
+            if (bindingsChanged) {
+                renderBindings();
+            }
+        }
+
+        function addBinding() {
+            const select = document.getElementById('person-select');
+            const group = document.getElementById('group-select').value;
+            const selected = Array.from(select.selectedOptions).map(opt => opt.value).filter(n => n);
+            if (selected.length === 0) {
+                alert('請至少選擇一個人來指定分組！');
+                return;
+            }
+            lockedGroups.push({ members: selected, group });
+            renderBindings();
+        }
+
+        function renderBindings() {
+            const container = document.getElementById('binding-tags');
+            container.innerHTML = '';
+            lockedGroups.forEach((binding, idx) => {
+                const tag = document.createElement('div');
+                tag.className = 'binding-tag';
+                tag.innerHTML = `[${binding.members.join(', ')}] → ${binding.group} 組 <button onclick="removeBinding(${idx})">❌</button>`;
+                container.appendChild(tag);
+            });
+        }
+
+        function removeBinding(index) {
+            lockedGroups.splice(index, 1);
+            renderBindings();
+        }
+
+        function startLottery() {
+            updatePersonSelect();
+
+            // Get all names from inputs
+            let females = Array.from(document.querySelectorAll('.female')).map(i => i.value.trim()).filter(n => n);
+            let males = Array.from(document.querySelectorAll('.male')).map(i => i.value.trim()).filter(n => n);
+            
+            const groups = { A: [], B: [], C: [], D: [], E: [], F: [] };
+            const assigned = new Set();
+            const groupOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+            // Step 1: Process special bindings first
+            for (const bind of lockedGroups) {
+                const groupList = groups[bind.group];
+                for (const name of bind.members) {
+                    if (!assigned.has(name)) {
+                        groupList.push(name);
+                        assigned.add(name);
+                    }
+                }
+            }
+
+            // Step 2: Find which people are already assigned from the special bindings
+            const allFemalesAssigned = females.filter(name => assigned.has(name));
+            const allMalesAssigned = males.filter(name => assigned.has(name));
+            
+            // Count how many males are in each group from the special bindings
+            const malesInGroups = {};
+            for (const group of groupOrder) {
+                malesInGroups[group] = groups[group].filter(name => males.includes(name)).length;
+            }
+
+            // Step 3: Distribute remaining males to ensure at least one male per group if possible
+            const remainingMales = males.filter(name => !assigned.has(name));
+            shuffle(remainingMales);
+            
+            // First, prioritize groups with no males
+            for (const group of groupOrder) {
+                if (malesInGroups[group] === 0 && remainingMales.length > 0) {
+                    const male = remainingMales.shift();
+                    groups[group].push(male);
+                    assigned.add(male);
+                    malesInGroups[group]++;
+                }
+            }
+            
+            // Step 4: Distribute any remaining males evenly
+            let groupIndex = 0;
+            remainingMales.forEach(male => {
+                // Find next available group in sequence
+                let initialIndex = groupIndex;
+                let found = false;
+                
+                // Try all groups in sequence, starting from current index
+                while (!found) {
+                    const targetGroup = groupOrder[groupIndex];
+                    // Add to group if not already maxed out (3 people)
+                    if (groups[targetGroup].length < 3) {
+                        groups[targetGroup].push(male);
+                        assigned.add(male);
+                        found = true;
+                    }
+                    // Move to next group, wrap around if needed
+                    groupIndex = (groupIndex + 1) % groupOrder.length;
+                    
+                    // If we've tried all groups and none have space, break
+                    if (groupIndex === initialIndex) break;
+                }
+            });
+
+            // Step 5: Now distribute remaining females evenly
+            const remainingFemales = females.filter(name => !assigned.has(name));
+            shuffle(remainingFemales);
+            
+            // Reset group index to start from A again
+            groupIndex = 0;
+            
+            remainingFemales.forEach(female => {
+                // Find next available group in sequence
+                let initialIndex = groupIndex;
+                let found = false;
+                
+                // Try all groups in sequence, starting from current index
+                while (!found) {
+                    const targetGroup = groupOrder[groupIndex];
+                    // Add to group if not already maxed out (3 people)
+                    if (groups[targetGroup].length < 3) {
+                        groups[targetGroup].push(female);
+                        assigned.add(female);
+                        found = true;
+                    }
+                    // Move to next group, wrap around if needed
+                    groupIndex = (groupIndex + 1) % groupOrder.length;
+                    
+                    // If we've tried all groups and none have space, break
+                    if (groupIndex === initialIndex) break;
+                }
+            });
+
+            // Step 6: Handle any remaining people (should be rare but just in case)
+            const remainingPeople = [...remainingMales, ...remainingFemales].filter(name => !assigned.has(name));
+            
+            remainingPeople.forEach(person => {
+                // Find group with fewest members
+                const targetGroup = Object.keys(groups).reduce((a, b) =>
+                    groups[a].length <= groups[b].length ? a : b
+                );
+                
+                if (groups[targetGroup].length < 3) {
+                    groups[targetGroup].push(person);
+                    assigned.add(person);
+                }
+            });
+
+            // Display results
+            let resultHTML = '<h3>抽籤結果：</h3><div class="groups-container">';
+            for (const [groupName, members] of Object.entries(groups)) {
+                resultHTML += `
+                    <div class="group">
+                        <h4>第${groupName}組</h4>
+                        <p>${members.join('<br>')}</p>
+                    </div>`;
+            }
+            resultHTML += '</div>';
+            document.getElementById('result').innerHTML = resultHTML;
+        }
+
+        window.onload = updatePersonSelect;
+    </script>
+</body>
+</html>
