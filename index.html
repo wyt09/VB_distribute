@@ -480,7 +480,7 @@
                     const targetGroup = groupOrder[groupIndex];
                     // Add to group if not already maxed out (3 people)
                     if (groups[targetGroup].length < 3) {
-                        groups[group].push({ name: female, gender: 'female' });
+                        groups[targetGroup].push({ name: female, gender: 'female' });
                         assigned.add(female);
                         found = true;
                     }
