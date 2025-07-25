@@ -499,7 +499,8 @@
                 );
                 
                 if (groups[targetGroup].length < 3) {
-                    groups[targetGroup].push(person);
+                    let gender = remainingMales.includes(person) ? 'male' : 'female';
+                    groups[targetGroup].push({ name: person, gender: gender });
                     assigned.add(person);
                 }
             });
