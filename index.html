@@ -5,14 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>華一江排球團抽籤分組程式</title>
     <style>
-        male {
-  color: steelblue;
-}
-
-.female {
-  color: hotpink;
-}
-
+    .male {color: steelblue;}
+    .female {color: hotpink;}
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -456,7 +450,7 @@
                     const targetGroup = groupOrder[groupIndex];
                     // Add to group if not already maxed out (3 people)
                     if (groups[targetGroup].length < 3) {
-                        groups[targetGroup].push({male});;
+                        groups[targetGroup].push(male);
                         assigned.add(male);
                         found = true;
                     }
