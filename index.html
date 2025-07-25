@@ -398,7 +398,16 @@
             // Get all names from inputs
             let females = Array.from(document.querySelectorAll('.female')).map(i => i.value.trim()).filter(n => n);
             let males = Array.from(document.querySelectorAll('.male')).map(i => i.value.trim()).filter(n => n);
-            
+        
+            females.forEach(name => {
+  container.innerHTML += `<span class="female">${name}</span><br>`;
+});
+
+males.forEach(name => {
+  container.innerHTML += `<span class="male">${name}</span><br>`;
+});
+
+
             const groups = { A: [], B: [], C: [], D: [], E: [], F: [] };
             const assigned = new Set();
             const groupOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
