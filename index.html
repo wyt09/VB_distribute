@@ -433,7 +433,7 @@
             for (const group of groupOrder) {
                 if (malesInGroups[group] === 0 && remainingMales.length > 0) {
                     const male = remainingMales.shift();
-                    groups[group].push(male);
+                    groups[group].push({ name: male, gender: 'male' });
                     assigned.add(male);
                     malesInGroups[group]++;
                 }
