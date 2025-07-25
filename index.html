@@ -448,7 +448,7 @@
                     const targetGroup = groupOrder[groupIndex];
                     // Add to group if not already maxed out (3 people)
                     if (groups[targetGroup].length < 3) {
-                        groups[targetGroup].push(male);
+                        groups[targetGroup].push({name:male, gender:'male'});;
                         assigned.add(male);
                         found = true;
                     }
@@ -499,8 +499,7 @@
                 );
                 
                 if (groups[targetGroup].length < 3) {
-                    let gender = remainingMales.includes(person) ? 'male' : 'female';
-                    groups[targetGroup].push({ name: person, gender: gender });
+                    groups[targetGroup].push(person);
                     assigned.add(person);
                 }
             });
