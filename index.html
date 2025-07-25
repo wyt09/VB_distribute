@@ -1,18 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <style>
-.male {
-  color: steelblue;
-  font-weight: bold;
-}
-
-.female {
-  color: hotpink;
-  font-style: italic;
-}
-</style>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>華一江排球團抽籤分組程式</title>
@@ -524,10 +512,10 @@ for (const [groupName, members] of Object.entries(groups)) {
         <div class="group">
             <h4>第${groupName}組</h4>
             <p>
-  ${members.map(member =>
-    `<span class="${member.gender}">${member.name}</span>`
-  ).join('<br>')}
-</p>
+                ${members.map(member => 
+                    `<span class="${member.gender}">${member.name}</span>`
+                ).join('<br>')}
+            </p>
         </div>`;
 }
 resultHTML += '</div>';
