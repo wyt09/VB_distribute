@@ -451,7 +451,7 @@
                     const targetGroup = groupOrder[groupIndex];
                     // Add to group if not already maxed out (3 people)
                     if (groups[targetGroup].length < 3) {
-                        groups[targetGroup].push({ name: male, gender: 'male' });
+                        groups[targetGroup].push(male;
                         assigned.add(male);
                         found = true;
                     }
@@ -480,7 +480,7 @@
                     const targetGroup = groupOrder[groupIndex];
                     // Add to group if not already maxed out (3 people)
                     if (groups[targetGroup].length < 3) {
-                        groups[targetGroup].push({ name: female, gender: 'female' });
+                        groups[targetGroup].push(female);
                         assigned.add(female);
                         found = true;
                     }
@@ -513,11 +513,7 @@
                 resultHTML += `
                     <div class="group">
                         <h4>第${groupName}組</h4>
-                        <p>
-                            ${members.map(member => 
-                             `<span class="${member.gender}">${member.name}</span>`
-                            ).join('<br>')}
-                        </p>
+                        <p>${members.join('<br>')}</p>
                     </div>`;
             }
             resultHTML += '</div>';
